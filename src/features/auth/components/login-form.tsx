@@ -1,18 +1,27 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { useLoginMutation } from "../hooks/use-auth";
+import { LoginFormValues } from "../types/auth.form";
+import { Button } from "@khinemyaezin/seller-ui/components/button";
+import { LoginRequest } from "../types/auth.request";
+import { HateoasLink } from "@khinemyaezin/seller-api";
+import { FieldGroup, Field, FieldLabel, FieldError } from "@khinemyaezin/seller-ui/components/field";
+import { Input } from "@khinemyaezin/seller-ui/components/input";
 
-interface LoginFormValues {
-  email: string;
-  password: string;
+export type LoginFormProps = {
+  link: HateoasLink
 }
 
-export function LoginForm() {
+export function LoginForm({ link }: LoginFormProps) {
   const loginMutation = useLoginMutation();
   const form = useForm<LoginFormValues>();
-  const { register, handleSubmit, formState: { errors } } = form;
+  const { handleSubmit, register, formState:{ errors } } = form;
 
   const onSubmit = (data: LoginFormValues) => {
-    loginMutation.mutate(data, {
+    const payload: LoginRequest = {
+      email: data.email,
+      password: data.password
+    }
+    loginMutation.mutate({ link: link, request: payload }, {
       onSuccess: (res) => {
         console.log("Login successful", res);
       },
@@ -24,49 +33,47 @@ export function LoginForm() {
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className="auth-form" noValidate>
-        <div className="form-field">
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Enter a valid email address",
-              },
-            })}
-            aria-invalid={Boolean(errors.email)}
-            placeholder="seller@example.com"
-          />
-          {errors.email && <span className="field-error">{errors.email.message}</span>}
-        </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
 
-        <div className="form-field">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            {...register("password", { required: "Password is required" })}
-            aria-invalid={Boolean(errors.password)}
-          />
-          {errors.password && <span className="field-error">{errors.password.message}</span>}
-        </div>
+           <FieldGroup>
+            <Field data-invalid={!!errors.email}>
+                <FieldLabel htmlFor="email">Username or email address</FieldLabel>
+                <Input
+                    id="email"
+                    type="email"
+                    {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: "Enter a valid email address",
+                        },
+                    })}
+                    aria-invalid={Boolean(errors.email)}
+                />
+                <FieldError errors={[errors.email]} />
+            </Field>
+            <Field data-invalid={!!errors.password}>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <Input
+                    id="password"
+                    type="password"
+                    {...register("password", { required: "Password is required" })}
+                    aria-invalid={Boolean(errors.password)}
+                />
+                <FieldError errors={[errors.password]} />
+            </Field>
+        </FieldGroup>
 
-        <button
+
+        <Button
           type="submit"
+          variant="default"
+          size="default"
+          className="w-full mt-6"
           disabled={loginMutation.isPending}
-          className="submit-button"
         >
-          {loginMutation.isPending ? "Logging in..." : "Login"}
-        </button>
-
-        {loginMutation.isError && (
-          <div className="submit-error" role="alert">
-            Failed to login. Please check your credentials.
-          </div>
-        )}
+          Sign in
+        </Button>
       </form>
     </FormProvider>
   );
