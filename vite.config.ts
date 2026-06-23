@@ -1,10 +1,13 @@
 import { fileURLToPath, URL } from "node:url";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import { federation } from "@module-federation/vite";
 
-export default defineConfig(({ mode }) => ({
-  base: mode === "development" ? "/" : "/mfe/auth/",
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  
+  return {
+  base: mode === "development" ? "/" : "/mfe/seller-auth/",
   resolve: { alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) } },
   plugins: [
     react(),
@@ -24,16 +27,17 @@ export default defineConfig(({ mode }) => ({
         "react-dom": { singleton: true, requiredVersion: "19.2.4" },
         "react-router": { singleton: true, requiredVersion: "7.18.0" },
         "@tanstack/react-query": { singleton: true, requiredVersion: "5.99.2" },
-        "@grab/seller-api": { singleton: true, requiredVersion: "0.1.0" },
+        "@khinemyaezin/seller-api": { singleton: true, requiredVersion: "0.1.0" },
       },
     }),
   ],
   server: {
     port: 3003,
-    origin: "http://localhost:3003",
-    cors: { origin: "http://localhost:3000" },
-    proxy: { "/api": { target: "http://localhost:8080", changeOrigin: true, xfwd: true } },
+    origin: env.VITE_CORS_ORIGIN,
+    cors: { origin: env.VITE_CORS_ORIGIN },
+    proxy: { "/api": { target: env.VITE_API_URL, changeOrigin: true, xfwd: true } },
   },
   preview: { port: 3003 },
   build: { target: "chrome111" },
-}));
+}
+});

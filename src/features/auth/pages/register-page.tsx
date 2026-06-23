@@ -1,23 +1,29 @@
 import { RegisterForm } from "../components/register-form";
 import { Link } from "react-router";
+import { getIdentityRoot } from "../hooks/use-identity-root";
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@khinemyaezin/seller-ui/components/card";
+import { Button } from "@khinemyaezin/seller-ui/components/button";
 
 export default function RegisterPage() {
+  const { data } = getIdentityRoot();
+
   return (
-    <main className="auth-page">
-      <section className="auth-card">
-        <div>
-          <h1>
-            Register as a Seller
-          </h1>
-          <p className="auth-switch">
-            Already have an account?{" "}
-            <Link to="/login">
-              Sign in
-            </Link>
-          </p>
-        </div>
-        <RegisterForm />
-      </section>
-    </main>
+    <div className="flex flex-1 flex-col items-center justify-center">
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle> Register as a Seller</CardTitle>
+          <CardAction>
+            <Button variant="link">
+              <Link to="/login">
+                Sign in
+              </Link>
+            </Button>
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          {data?.register && <RegisterForm link={data.register} />}
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -1,27 +1,24 @@
-import { LoginForm } from "../components/login-form";
 import { Link } from "react-router";
-import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from "@grab/seller-ui/components/card";
-
+import { LoginForm } from "../components/login-form";
+import { getIdentityRoot } from "../hooks/use-identity-root";
 
 export default function LoginPage() {
+  const { data } = getIdentityRoot();
+  
   return (
-    <main className="container mx-auto max-w-xl">
-      <Card className="w-full sm:max-w-md">
-        <CardHeader>
-          <CardTitle>
-            Sign in to Seller Center
-          </CardTitle>
-          <CardAction className="auth-switch">
-            Or{" "}
-            <Link to="/register">
-              create a new account
+    <div className="flex flex-1 flex-col items-center justify-center overflow-hidden">
+      <div className="w-full sm:w-[340px]">
+        {data?.login && <LoginForm link={data.login} />}
+
+        {data?.register && (
+          <div className="text-center text-sm mt-4">
+            New to Seller Center?{" "}
+            <Link to="/register" className="text-primary hover:underline">
+              Create an account
             </Link>
-          </CardAction>
-        </CardHeader>
-        <CardContent>
-          <LoginForm />
-        </CardContent>
-      </Card>
-    </main>
+          </div>
+          )}
+      </div>
+    </div>
   );
 }
