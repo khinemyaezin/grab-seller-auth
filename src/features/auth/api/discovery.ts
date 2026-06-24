@@ -8,6 +8,7 @@ export async function fetchIdentityRoot(link: HateoasLink): Promise<IdentityRoot
   return {
     self: resolveLink(response._links, "self"),
     getProfile: resolveLink(response._links, "get-profile"),
+    getUser: resolveLink(response._links, "get-user"),
     listUsers: resolveLink(response._links, "list-users"),
     listRoles: resolveLink(response._links, "list-roles"),
     login: resolveLink(response._links, "login"),

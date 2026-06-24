@@ -48,6 +48,7 @@ export function LoginForm({ link }: LoginFormProps) {
                             message: "Enter a valid email address",
                         },
                     })}
+                    required
                     aria-invalid={Boolean(errors.email)}
                 />
                 <FieldError errors={[errors.email]} />
@@ -59,6 +60,7 @@ export function LoginForm({ link }: LoginFormProps) {
                     type="password"
                     {...register("password", { required: "Password is required" })}
                     aria-invalid={Boolean(errors.password)}
+                    required
                 />
                 <FieldError errors={[errors.password]} />
             </Field>

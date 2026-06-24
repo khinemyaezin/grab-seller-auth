@@ -1,11 +1,12 @@
 import { RegisterForm } from "../components/register-form";
 import { Link } from "react-router";
-import { getIdentityRoot } from "../hooks/use-identity-root";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@khinemyaezin/seller-ui/components/card";
 import { Button } from "@khinemyaezin/seller-ui/components/button";
+import useIdentityRoot from "@/features/shared/hook/use-identity-root";
+import { routes } from "@khinemyaezin/seller-contracts";
 
 export default function RegisterPage() {
-  const { data } = getIdentityRoot();
+  const { data } = useIdentityRoot();
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center">
@@ -14,7 +15,7 @@ export default function RegisterPage() {
           <CardTitle> Register as a Seller</CardTitle>
           <CardAction>
             <Button variant="link">
-              <Link to="/login">
+              <Link to={routes.login}>
                 Sign in
               </Link>
             </Button>

@@ -39,7 +39,7 @@ When creating a new React component within a feature (e.g., inside `src/features
 
 ### A. File Naming and Export
 - **File Name:** Use `kebab-case` for file names (e.g., `login-form.tsx`, `user-profile.tsx`).
-- **Export:** Use **named exports** for components, not default exports.
+- **Export:** Use **default exports** for components (e.g., `export default function ComponentName(...)`).
 
 ### B. Props Definition
 - Define component props using a `type` alias.
@@ -51,25 +51,31 @@ When creating a new React component within a feature (e.g., inside `src/features
 - For layout and minor styling, use Tailwind CSS utility classes via the `className` prop.
 
 ### D. Separation of Concerns
-- **Logic:** Keep complex business logic and API calls out of the component. Use custom hooks (located in the `hooks/` directory) and pass down the necessary state and mutation functions.
+- **Logic:** Keep complex business logic and API calls out of the component. Use custom hooks (located in the `hooks/` directory) to fetch data (e.g., `useLocations`) and handle mutations (e.g., `useEntityActions`), then pass down the necessary state.
+- **Data & Links:** Pass `HateoasLink` references as props from the parent to fetch data or resolve links for actions. Use `@khinemyaezin/seller-api` utilities like `resolveLink` and `hasLink` to manage permissions and HATEOAS actions.
 - **Forms:** For form handling and validation, use `react-hook-form`. Integrate with shared form UI components like `FieldGroup`, `Field`, `FieldLabel`, `FieldError`, and `Input`.
 
 ## 4. Page Structure Guideline
 
 Pages act as the structural containers that compose various UI components, forms, and contexts. When building a new page (e.g., inside `src/features/[feature-name]/pages/`), follow this composition pattern:
 
-### A. Composition Flow (`page -> form -> component`)
-- **Page (`[feature-name]-page.tsx`):** The page component is responsible for high-level layout, fetching root data/links (e.g., using `getIdentityRoot()`), and passing down necessary props or `HateoasLink` references to child components.
-- **Form/Container (`[feature-name]-form.tsx`):** The form component receives the necessary links/props from the page and handles the form state, validation (`react-hook-form`), and mutation logic.
-- **Example Flow:** See [`login-page.tsx`](file:///Users/khinemyaezin/Repository/grab-web/grab-seller-auth/src/features/auth/pages/login-page.tsx). The `LoginPage` acts as a layout wrapper, fetches data, and conditionally renders the `LoginForm` component, passing down the link as a prop (`<LoginForm link={data.login} />`).
+### A. Composition Flow (`page -> view -> specific components`)
+A fully-fledged feature typically consists of the following necessary structural components:
+- **Page (`[feature-name]-page.tsx`):** The page component is responsible for high-level layout, fetching root data/links (e.g., using `getIdentityRoot()`), and passing down necessary props or `HateoasLink` references to the `View` component.
+- **View (`[feature-name]-view.tsx`):** Acts as the orchestrator for the page's UI elements. It manages the layout of the `Table`, `Filter`, and interactions like opening modals for forms.
+- **Table (`[feature-name]-table.tsx`):** Renders the list of entities and utilizes the shared `<Pager>` for pagination.
+- **Filter (`[feature-name]-filter.tsx`):** Provides search and filtering capabilities for the table.
+- **Forms (`new-[feature-name]-form.tsx`, `edit-[feature-name]-form.tsx`):** Handle creation and modification of entities. They receive the necessary links/props and manage form state, validation (`react-hook-form`), and mutation logic.
+- **Fieldset (`[feature-name]-fieldset.tsx`):** Reusable groups of form fields that can be shared between the `new` and `edit` forms.
+- **Example Flow:** The `LocationPage` fetches data and renders `LocationView`. The `LocationView` renders `LocationFilter` and `LocationTable`. Actions in the view might open a `NewLocationForm` or `EditLocationForm`.
 
 ### B. Default Export for Pages
-- **Export:** Unlike standard components, use **default exports** for top-level page components to simplify lazy loading and routing (e.g., `export default function LoginPage()`).
+- **Export:** Use **default exports** for top-level page components to simplify lazy loading and routing (e.g., `export default function LoginPage()`).
 
 ## Summary Checklist for Agents
 - [ ] Is the component placed in the correct `features/[feature-name]/components/` directory?
 - [ ] Is the file named in `kebab-case.tsx`?
 - [ ] Are props defined explicitly with an exported `type`?
-- [ ] Is it a named export?
+- [ ] Is it a default export?
 - [ ] Are shared UI components from `@khinemyaezin/seller-ui` being used instead of raw HTML elements where applicable?
 - [ ] Is complex logic abstracted into custom hooks?
