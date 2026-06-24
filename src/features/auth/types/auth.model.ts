@@ -8,6 +8,7 @@ export type IdentityRoot = {
     self?: HateoasLink;
     getProfile?: HateoasLink;
     listUsers?: HateoasLink;
+    getUser?: HateoasLink;
     listRoles?: HateoasLink;
     login?: HateoasLink;
     register?: HateoasLink;
