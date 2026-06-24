@@ -25,26 +25,30 @@ export default function EditUserRolesForm({ link, filterRoles, onAssignRole }: E
     <FormProvider {...form}>
       <form onSubmit={handleSubmit(handleOnSubmit)}>
         <ButtonGroup>
-          <Controller
-            control={control}
-            name="roleCode"
-            rules={{
-              required: "Role is required",
-            }}
-            render={({ field }) => (
-              <RolesSearch
-                {...field}
-                id="roleCode"
-                type="text"
-                placeholder="Search roles to add"
-                className="pl-9"
-                link={link}
-                filterRoles={filterRoles}
-                onValueChange={field.onChange}
-              />
-            )}
-          />
-          <Button type="submit">Add</Button>
+          <ButtonGroup>
+            <Controller
+              control={control}
+              name="roleCode"
+              rules={{
+                required: "Role is required",
+              }}
+              render={({ field }) => (
+                <RolesSearch
+                  {...field}
+                  id="roleCode"
+                  type="text"
+                  placeholder="Search roles to add"
+                  className="pl-9"
+                  link={link}
+                  filterRoles={filterRoles}
+                  onValueChange={field.onChange}
+                />
+              )}
+            />
+          </ButtonGroup>
+          <ButtonGroup>
+            <Button type="submit">Add</Button>
+          </ButtonGroup>
         </ButtonGroup>
       </form>
     </FormProvider>

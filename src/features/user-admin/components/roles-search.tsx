@@ -1,5 +1,5 @@
 import { Input } from "@khinemyaezin/seller-ui/components/index";
-import { DisplayItem, MagicSearch, MagicSearchInputProps } from "@khinemyaezin/seller-ui/components/magic-search";
+import { MagicSearch, MagicSearchInputProps } from "@khinemyaezin/seller-ui/components/magic-search";
 import { SearchIcon } from "lucide-react";
 import { ComponentPropsWithoutRef, useEffect, useState } from "react";
 import { useRoleSearch } from "../hooks/use-users";
