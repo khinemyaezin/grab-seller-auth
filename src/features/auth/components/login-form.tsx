@@ -3,7 +3,7 @@ import { useLoginMutation } from "../hooks/use-auth";
 import { LoginFormValues } from "../types/auth.form";
 import { Button } from "@khinemyaezin/seller-ui/components/button";
 import { LoginRequest } from "../types/auth.request";
-import { HateoasLink } from "@khinemyaezin/seller-api";
+import { HateoasLink, eventBus } from "@khinemyaezin/seller-api";
 import { FieldGroup, Field, FieldLabel, FieldError } from "@khinemyaezin/seller-ui/components/field";
 import { Input } from "@khinemyaezin/seller-ui/components/input";
 
@@ -23,7 +23,7 @@ export function LoginForm({ link }: LoginFormProps) {
     }
     loginMutation.mutate({ link: link, request: payload }, {
       onSuccess: (res) => {
-        console.log("Login successful", res);
+        eventBus.publish("auth:login-success:v1", { userId: res.userId, role: '' });
       },
       onError: (err) => {
         console.error("Login failed", err);

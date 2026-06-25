@@ -7,12 +7,12 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   
   return {
-  base: mode === "development" ? "/" : "/mfe/seller-auth/",
+  base: mode === "development" ? "/" : "/mfe/grab-seller-auth/",
   resolve: { alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) } },
   plugins: [
     react(),
     federation({
-      name: "seller_auth",
+      name: "grab_seller_auth",
       filename: "remoteEntry.js",
       manifest: true,
       dts: {
@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
         "react-dom": { singleton: true, requiredVersion: "19.2.4" },
         "react-router": { singleton: true, requiredVersion: "7.18.0" },
         "@tanstack/react-query": { singleton: true, requiredVersion: "5.99.2" },
-        "@khinemyaezin/seller-api": { singleton: true, requiredVersion: "0.1.0" },
+        "@khinemyaezin/seller-api": { singleton: true, requiredVersion: "0.1.4" },
       },
     }),
   ],
