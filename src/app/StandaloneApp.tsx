@@ -6,15 +6,13 @@ import AuthRoutes from "./AuthRoutes";
 
 export default function StandaloneApp() {
   const [client] = useState(() => new QueryClient());
-  
+
   return (
     <ThemeProvider>
       <QueryClientProvider client={client}>
         <BrowserRouter>
-          <main className="flex min-h-screen flex-col bg-background p-8">
-            <Toaster />
-            <AuthRoutes identityLink={{ href: import.meta.env.VITE_API_IDENTITY_URL, }} />
-          </main>
+          <Toaster />
+          <AuthRoutes identityLink={{ href: import.meta.env.VITE_API_IDENTITY_URL, }} />
         </BrowserRouter>
       </QueryClientProvider>
     </ThemeProvider>

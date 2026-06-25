@@ -6,6 +6,7 @@ import UserDetailPage from "../features/user-admin/pages/user-detail-page";
 import { HateoasLink } from "@khinemyaezin/seller-api";
 import { routes } from "@khinemyaezin/seller-contracts";
 import { IdentityLinkProvider } from "@/features/shared/context";
+import "../styles.css";
 
 export default function AuthRoutes({ identityLink }: { identityLink: HateoasLink }) {
   return (

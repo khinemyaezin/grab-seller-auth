@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite --port 3003",
     "build": "tsc -b && vite build",
+    "build:staging": "tsc -b && vite build --mode staging",
+    "build:production": "tsc -b && vite build --mode production",
     "preview": "vite preview --port 3003",
     "typecheck": "tsc -b",
     "test": "vitest run"
@@ -45,5 +47,7 @@
     "vite": "8.0.16",
     "vitest": "4.1.9"
   },
-  "engines": { "node": ">=20.19.0" }
+  "engines": {
+    "node": ">=20.19.0"
+  }
 }
