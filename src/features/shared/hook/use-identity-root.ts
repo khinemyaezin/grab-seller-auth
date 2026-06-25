@@ -1,14 +1,14 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { fetchIdentityRoot } from "../../auth/api/discovery";
-import { useIdentityLink } from "../context";
+import { useEntryLink } from "../context";
 import type { IdentityRoot } from "@/features/auth/types/auth.model";
 
 export default function useIdentityRoot(): UseQueryResult<IdentityRoot, Error> {
-    const identityLink = useIdentityLink();
+    const entryLink = useEntryLink();
 
     return useQuery({
-        queryKey: ["identity-root", identityLink.href],
-        queryFn: () => fetchIdentityRoot(identityLink),
-        enabled: !!identityLink,
+        queryKey: ["identity-root", entryLink.href],
+        queryFn: () => fetchIdentityRoot(entryLink),
+        enabled: !!entryLink,
     });
 }

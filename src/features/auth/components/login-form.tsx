@@ -3,15 +3,16 @@ import { useLoginMutation } from "../hooks/use-auth";
 import { LoginFormValues } from "../types/auth.form";
 import { Button } from "@khinemyaezin/seller-ui/components/button";
 import { LoginRequest } from "../types/auth.request";
-import { HateoasLink, eventBus } from "@khinemyaezin/seller-api";
+import { HateoasLink } from "@khinemyaezin/seller-api";
 import { FieldGroup, Field, FieldLabel, FieldError } from "@khinemyaezin/seller-ui/components/field";
 import { Input } from "@khinemyaezin/seller-ui/components/input";
 
 export type LoginFormProps = {
-  link: HateoasLink
+  link: HateoasLink;
+  onLoginSuccess: () => void;
 }
 
-export function LoginForm({ link }: LoginFormProps) {
+export function LoginForm({ link, onLoginSuccess }: LoginFormProps) {
   const loginMutation = useLoginMutation();
   const form = useForm<LoginFormValues>();
   const { handleSubmit, register, formState:{ errors } } = form;
@@ -22,9 +23,7 @@ export function LoginForm({ link }: LoginFormProps) {
       password: data.password
     }
     loginMutation.mutate({ link: link, request: payload }, {
-      onSuccess: (res) => {
-        eventBus.publish("auth:login-success:v1", { userId: res.userId, role: '' });
-      },
+      onSuccess: onLoginSuccess,
       onError: (err) => {
         console.error("Login failed", err);
       }

@@ -1,12 +1,15 @@
 import { RegisterForm } from "../components/register-form";
 import { Link } from "react-router";
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@khinemyaezin/seller-ui/components/card";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@khinemyaezin/seller-ui/components/card";
 import { Button } from "@khinemyaezin/seller-ui/components/button";
 import useIdentityRoot from "@/features/shared/hook/use-identity-root";
 import { routes } from "@khinemyaezin/seller-contracts";
+import { usePlatform } from "@/features/shared/context";
+import { eventBus } from "@khinemyaezin/seller-api";
 
 export default function RegisterPage() {
   const { data } = useIdentityRoot();
+  const platform = usePlatform();
 
   return (
     <main className="flex min-h-screen flex-col bg-background p-8">
@@ -23,7 +26,14 @@ export default function RegisterPage() {
             </CardAction>
           </CardHeader>
           <CardContent>
-            {data?.register && <RegisterForm link={data.register} />}
+            {data?.register && (
+              <RegisterForm
+                link={data.register}
+                onRegisterSuccess={() => {
+                  (platform?.events ?? eventBus).publish("auth:login-success:v1", {});
+                }}
+              />
+            )}
           </CardContent>
         </Card>
       </div>

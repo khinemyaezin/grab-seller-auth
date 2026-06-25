@@ -32,7 +32,7 @@ describe('LoginForm', () => {
       options.onSuccess({ userId: 'user-123' });
     });
 
-    render(<LoginForm link={mockLink} />);
+    render(<LoginForm link={mockLink} onLoginSuccess={()=>{}} />);
 
     fireEvent.change(screen.getByLabelText(/username or email address/i), { 
       target: { value: 'test@example.com' } 
@@ -54,9 +54,5 @@ describe('LoginForm', () => {
       );
     });
 
-    expect(eventBus.publish).toHaveBeenCalledWith('auth:login-success:v1', { 
-      userId: 'user-123', 
-      role: '' 
-    });
   });
 });

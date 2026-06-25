@@ -1,2 +1,2 @@
-export { IdentityLinkProvider } from "./identity-link-context";
-export { useIdentityLink } from "./identity-link-context";
+export { EntryLinkProvider, useEntryLink } from "./entry-link-provider";
+export { PlatformProvider, usePlatform } from "./platform-provider";

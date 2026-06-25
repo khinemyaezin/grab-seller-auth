@@ -12,7 +12,7 @@ export default function StandaloneApp() {
       <QueryClientProvider client={client}>
         <BrowserRouter>
           <Toaster />
-          <AuthRoutes identityLink={{ href: import.meta.env.VITE_API_IDENTITY_URL, }} />
+          <AuthRoutes link={{ href: import.meta.env.VITE_API_IDENTITY_URL, }} />
         </BrowserRouter>
       </QueryClientProvider>
     </ThemeProvider>
