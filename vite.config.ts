@@ -21,7 +21,10 @@ export default defineConfig(({ mode }) => {
             abortOnError: true,
           },
         },
-        exposes: { "./Routes": "./src/app/AuthRoutes.tsx" },
+        exposes: {
+          "./Routes": "./src/app/AuthRoutes.tsx",
+          "./AuthService": "./src/features/auth/api/auth-service.facade.ts"
+        },
         shared: {
           react: { singleton: true, requiredVersion: "19.2.4" },
           "react-dom": { singleton: true, requiredVersion: "19.2.4" },

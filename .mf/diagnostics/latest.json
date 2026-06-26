@@ -1,10 +1,10 @@
 {
   "latestErrorEvent": {
     "code": "TYPE-001",
-    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"npx tsc --project /Users/khinemyaezin/Repository/grab-web/grab-seller-auth/node_modules/.federation/tsconfig.70acc5bd7fa0e64108ea09b5beb021b2.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
+    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"npx tsc --project /Users/khinemyaezin/Repository/grab-web/grab-seller-auth/node_modules/.federation/tsconfig.af27703b78c26ef19ff9738ecbf74cf7.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
     "args": {
-      "cmd": "npx tsc --project /Users/khinemyaezin/Repository/grab-web/grab-seller-auth/node_modules/.federation/tsconfig.70acc5bd7fa0e64108ea09b5beb021b2.json"
+      "cmd": "npx tsc --project /Users/khinemyaezin/Repository/grab-web/grab-seller-auth/node_modules/.federation/tsconfig.af27703b78c26ef19ff9738ecbf74cf7.json"
     },
-    "timestamp": 1782377522294
+    "timestamp": 1782456230358
   }
 }
