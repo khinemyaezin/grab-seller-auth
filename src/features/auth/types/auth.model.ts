@@ -12,4 +12,6 @@ export type IdentityRoot = {
     listRoles?: HateoasLink;
     login?: HateoasLink;
     register?: HateoasLink;
+    logout?: HateoasLink;
+    refreshToken?: HateoasLink;
 };

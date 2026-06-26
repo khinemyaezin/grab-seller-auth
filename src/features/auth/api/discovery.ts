@@ -13,5 +13,7 @@ export async function fetchIdentityRoot(link: HateoasLink): Promise<IdentityRoot
     listRoles: resolveLink(response._links, "list-roles"),
     login: resolveLink(response._links, "login"),
     register: resolveLink(response._links, "register"),
+    logout: resolveLink(response._links, "logout"),
+    refreshToken: resolveLink(response._links, "refresh-token"),
   };
 }

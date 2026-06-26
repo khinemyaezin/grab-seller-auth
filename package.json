@@ -13,9 +13,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@khinemyaezin/seller-api": "0.1.5",
-    "@khinemyaezin/seller-contracts": "0.1.4",
-    "@khinemyaezin/seller-ui": "0.1.3",
+    "@khinemyaezin/seller-contracts": "file:../grab-seller-shared-ui/packages/seller-contracts",
+    "@khinemyaezin/seller-api": "file:../grab-seller-shared-ui/packages/seller-api",
+    "@khinemyaezin/seller-ui": "file:../grab-seller-shared-ui/packages/seller-ui",
     "@hookform/resolvers": "5.2.2",
     "@tanstack/react-query": "5.99.2",
     "lodash": "4.18.1",
