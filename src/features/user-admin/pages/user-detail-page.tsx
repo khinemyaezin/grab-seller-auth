@@ -14,18 +14,20 @@ export default function UserDetailPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-2xl">
-      <Header
-        title="User Details"
-        description="View and manage this user's information and permissions."
-      >
-        <Button variant="outline">
-          <Link to={routes.admin.users}>Back</Link>
-        </Button>
-      </Header>
-      {identityRoot?.getUser && (
-        <UserDetailView link={identityRoot.getUser} userId={userId} />
-      )}
-    </div>
+    <main className="flex min-h-screen flex-col bg-background p-8">
+      <div className="container mx-auto max-w-2xl">
+        <Header
+          title="User Details"
+          description="View and manage this user's information and permissions."
+        >
+          <Button variant="outline">
+            <Link to={routes.admin.users}>Back</Link>
+          </Button>
+        </Header>
+        {identityRoot?.getUser && (
+          <UserDetailView link={identityRoot.getUser} userId={userId} />
+        )}
+      </div>
+    </main>
   );
 }

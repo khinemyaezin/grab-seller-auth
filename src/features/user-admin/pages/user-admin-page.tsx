@@ -18,13 +18,15 @@ export default function UserAdminPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-2xl">
-      <Header
-        title={`User Management`}
-        description="A list of all users in the system including their roles and status."
-      >
-      </Header>
-      <UserAdminView link={identityRoot.listUsers} />
-    </div>
+    <main className="flex min-h-screen flex-col bg-background p-8">
+      <div className="container mx-auto max-w-2xl">
+        <Header
+          title={`User Management`}
+          description="A list of all users in the system including their roles and status."
+        >
+        </Header>
+        <UserAdminView link={identityRoot.listUsers} />
+      </div>
+    </main>
   );
 }

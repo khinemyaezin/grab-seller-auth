@@ -2,7 +2,6 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 import { LoginForm } from './login-form';
 import { useLoginMutation } from '../hooks/use-auth';
-import { eventBus } from '@khinemyaezin/seller-api';
 
 vi.mock('../hooks/use-auth', () => ({
   useLoginMutation: vi.fn(),
