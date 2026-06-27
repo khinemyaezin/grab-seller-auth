@@ -10,9 +10,10 @@ import { Button } from "@khinemyaezin/seller-ui/components/button";
 
 export type RegisterFormProps = {
   link: HateoasLink;
+  onRegisterSuccess: () => void
 }
 
-export function RegisterForm({ link }: RegisterFormProps) {
+export function RegisterForm({ link, onRegisterSuccess }: RegisterFormProps) {
   const form = useForm<RegisterFormValues>();
   const registerMutation = useRegisterMutation();
   const { register, handleSubmit, getValues, formState: { errors } } = form;
@@ -26,9 +27,7 @@ export function RegisterForm({ link }: RegisterFormProps) {
     }
 
     registerMutation.mutate({ link: link, request: payload }, {
-      onSuccess: (res) => {
-        console.log("Register successful", res);
-      },
+      onSuccess: onRegisterSuccess,
       onError: (err) => {
         console.error("Register failed", err);
       }

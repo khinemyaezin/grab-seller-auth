@@ -8,10 +8,11 @@ import { FieldGroup, Field, FieldLabel, FieldError } from "@khinemyaezin/seller-
 import { Input } from "@khinemyaezin/seller-ui/components/input";
 
 export type LoginFormProps = {
-  link: HateoasLink
+  link: HateoasLink;
+  onLoginSuccess: () => void;
 }
 
-export function LoginForm({ link }: LoginFormProps) {
+export function LoginForm({ link, onLoginSuccess }: LoginFormProps) {
   const loginMutation = useLoginMutation();
   const form = useForm<LoginFormValues>();
   const { handleSubmit, register, formState:{ errors } } = form;
@@ -22,9 +23,7 @@ export function LoginForm({ link }: LoginFormProps) {
       password: data.password
     }
     loginMutation.mutate({ link: link, request: payload }, {
-      onSuccess: (res) => {
-        console.log("Login successful", res);
-      },
+      onSuccess: onLoginSuccess,
       onError: (err) => {
         console.error("Login failed", err);
       }
