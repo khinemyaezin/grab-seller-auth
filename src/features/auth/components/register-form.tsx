@@ -23,7 +23,6 @@ export function RegisterForm({ link, onRegisterSuccess }: RegisterFormProps) {
     const payload: RegisterUserRequest = {
       email: formValues.email,
       password: formValues.password,
-      role: "SELLER"
     }
 
     registerMutation.mutate({ link: link, request: payload }, {

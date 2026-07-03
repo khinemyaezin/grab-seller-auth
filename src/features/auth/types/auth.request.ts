@@ -6,5 +6,4 @@ export interface LoginRequest {
 export interface RegisterUserRequest {
   email: string;
   password: string;
-  role: "SELLER";
 }

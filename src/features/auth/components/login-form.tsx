@@ -20,8 +20,8 @@ export function LoginForm({ link, onLoginSuccess }: LoginFormProps) {
   const onSubmit = (data: LoginFormValues) => {
     const payload: LoginRequest = {
       email: data.email,
-      password: data.password
-    }
+      password: data.password,
+    };
     loginMutation.mutate({ link: link, request: payload }, {
       onSuccess: onLoginSuccess,
       onError: (err) => {

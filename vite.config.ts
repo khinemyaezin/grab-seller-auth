@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
   return {
-    base: mode === "development" ? "/" : "/mfe/grab-seller-auth/",
+    base: mode === "development" ? "/" : "/mfe/seller-auth/",
     resolve: { alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) } },
     plugins: [
       react(),
@@ -38,7 +38,14 @@ export default defineConfig(({ mode }) => {
       port: 3003,
       origin: env.VITE_ORIGIN,
       cors: { origin: env.VITE_CORS_ORIGIN },
-      proxy: { "/api": { target: env.VITE_API_URL, changeOrigin: true, xfwd: true } },
+      proxy: { 
+        "/api": { 
+          target: env.VITE_API_URL, 
+          changeOrigin: true, 
+          xfwd: true, 
+          headers: { "X-Platform": "SELLER_PORTAL" }
+        } 
+      },
     },
     preview: { port: 3003 },
     build: { target: "chrome111" },
