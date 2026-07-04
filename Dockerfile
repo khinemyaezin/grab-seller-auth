@@ -2,15 +2,6 @@ FROM node:22-alpine AS build
 
 WORKDIR /workspace
 
-COPY grab-seller-shared-ui/package*.json ./grab-seller-shared-ui/
-RUN --mount=type=secret,id=npmrc,target=/root/.npmrc \
-    cd grab-seller-shared-ui \
-    && npm ci
-
-COPY grab-seller-shared-ui ./grab-seller-shared-ui
-RUN cd grab-seller-shared-ui \
-    && npm run build
-
 COPY grab-seller-auth/package*.json ./grab-seller-auth/
 RUN --mount=type=secret,id=npmrc,target=/root/.npmrc \
     cd grab-seller-auth \

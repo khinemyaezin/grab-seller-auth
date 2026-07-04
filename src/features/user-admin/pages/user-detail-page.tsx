@@ -21,7 +21,7 @@ export default function UserDetailPage() {
           description="View and manage this user's information and permissions."
         >
           <Button variant="outline">
-            <Link to={routes.admin.users}>Back</Link>
+            <Link to="">Back</Link>
           </Button>
         </Header>
         {identityRoot?.getUser && (

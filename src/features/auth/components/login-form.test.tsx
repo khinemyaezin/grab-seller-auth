@@ -33,7 +33,7 @@ describe('LoginForm', () => {
 
     render(<LoginForm link={mockLink} onLoginSuccess={()=>{}} />);
 
-    fireEvent.change(screen.getByLabelText(/username or email address/i), { 
+    fireEvent.change(screen.getByLabelText(/email/i), { 
       target: { value: 'test@example.com' } 
     });
     fireEvent.change(screen.getByLabelText(/password/i), { 
