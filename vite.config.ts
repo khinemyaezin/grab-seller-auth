@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
   return {
-    base: mode === "development" ? "/" : "/mfe/grab-seller-auth/",
+    base: mode === "development" ? "/" : "/mfe/seller-auth/",
     resolve: { alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) } },
     plugins: [
       react(),
@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
           "react-dom": { singleton: true, requiredVersion: "19.2.4" },
           "react-router": { singleton: true, requiredVersion: "7.18.0" },
           "@tanstack/react-query": { singleton: true, requiredVersion: "5.99.2" },
-          "@khinemyaezin/seller-api": { singleton: true, requiredVersion: "0.1.5" },
+          "@khinemyaezin/seller-api": { singleton: true, requiredVersion: "^1.0.1-canary-a7c1b65" },
         },
       }),
     ],
@@ -38,7 +38,14 @@ export default defineConfig(({ mode }) => {
       port: 3003,
       origin: env.VITE_ORIGIN,
       cors: { origin: env.VITE_CORS_ORIGIN },
-      proxy: { "/api": { target: env.VITE_API_URL, changeOrigin: true, xfwd: true } },
+      proxy: { 
+        "/api": { 
+          target: env.VITE_API_URL, 
+          changeOrigin: true, 
+          xfwd: true, 
+          headers: { "X-Platform": "SELLER_PORTAL" }
+        } 
+      },
     },
     preview: { port: 3003 },
     build: { target: "chrome111" },

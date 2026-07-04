@@ -40,7 +40,7 @@ export default function UserAdminTable({ data, isLoading, isError, onPageChange 
         {users.map((user) => {
           return (
             <TableRow key={user.id}>
-              <TableCell><Link to={routes.admin.editUser(user.id)}>{user.email}</Link></TableCell>
+              <TableCell><Link to="">{user.email}</Link></TableCell>
               <TableCell>
                 <Badge variant={
                   user.status === 'ACTIVE' ? 'default' :

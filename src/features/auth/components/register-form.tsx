@@ -6,6 +6,7 @@ import { RegisterUserRequest } from "../types/auth.request";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@khinemyaezin/seller-ui/components/field";
 import { Input } from "@khinemyaezin/seller-ui/components/input";
 import { Button } from "@khinemyaezin/seller-ui/components/button";
+import { ButtonStatus } from "@khinemyaezin/seller-ui/components/index";
 
 
 export type RegisterFormProps = {
@@ -23,11 +24,12 @@ export function RegisterForm({ link, onRegisterSuccess }: RegisterFormProps) {
     const payload: RegisterUserRequest = {
       email: formValues.email,
       password: formValues.password,
-      role: "SELLER"
     }
 
     registerMutation.mutate({ link: link, request: payload }, {
-      onSuccess: onRegisterSuccess,
+      onSuccess: () => {
+        window.setTimeout(onRegisterSuccess, 700);
+      },
       onError: (err) => {
         console.error("Register failed", err);
       }
@@ -88,10 +90,23 @@ export function RegisterForm({ link, onRegisterSuccess }: RegisterFormProps) {
         <div className="flex items-center justify-center">
           <Button
             type="submit"
-            disabled={registerMutation.isPending}
+            disabled={registerMutation.isPending || registerMutation.isSuccess}
             className="w-full mt-6"
+            size="lg"
           >
-            {registerMutation.isPending ? "Registering..." : "Register"}
+            <ButtonStatus
+              status={
+                registerMutation.isPending
+                  ? "pending"
+                  : registerMutation.isSuccess
+                    ? "success"
+                    : "idle"
+              }
+              pendingLabel="Registering..."
+              successLabel="Register"
+            >
+              Save & Continue
+            </ButtonStatus>
           </Button>
 
         </div>
