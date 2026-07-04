@@ -1,43 +1,31 @@
 import { RegisterForm } from "../components/register-form";
-import { Link } from "react-router";
-import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from "@khinemyaezin/seller-ui/components/card";
-import { Button } from "@khinemyaezin/seller-ui/components/button";
 import useIdentityRoot from "@/features/shared/hook/use-identity-root";
-import { routes } from "@khinemyaezin/seller-contracts";
 import { usePlatform } from "@/features/shared/context";
 import { eventBus } from "@khinemyaezin/seller-api";
-import { Separator } from "@khinemyaezin/seller-ui/components/index";
+import { useState } from "react";
+import AuthAlert from "@/features/shared/components/auth-alert";
 
 export default function RegisterPage() {
   const { data } = useIdentityRoot();
   const platform = usePlatform();
+  const [error, setError] = useState<{ title: string, description: string } | undefined>(undefined)
 
   return (
-    <main className="flex min-h-screen flex-col bg-background p-8">
-      <div className="flex flex-1 flex-col items-center justify-center">
-        <Card className="w-full max-w-sm">
-          <CardHeader className="flex items-center">
-            <CardTitle className="grow">Start your journey with Grab</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {data?.register && (
-              <RegisterForm
-                link={data.register}
-                onRegisterSuccess={() => {
-                  (platform?.events ?? eventBus).publish("auth:registration-success:v1", {});
-                }}
-              />
-            )}
-          </CardContent>
-          <Separator />
-          <CardFooter className="flex justify-center gap-3">
-            <span>Already have an account?</span>
-            <Link to={`/${routes.login}`} className="text-primary hover:underline">
-              Sign in
-            </Link>
-          </CardFooter>
-        </Card>
+    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
+      <div className="w-full max-w-sm grid gap-6">
+        {error && <AuthAlert title={error.title} description={error.description} />}
+
+        {data?.register && (
+          <RegisterForm
+            link={data.register}
+            onRegisterSuccess={() => {
+              (platform?.events ?? eventBus).publish("auth:registration-success:v1", {});
+            }}
+            onRegisterError={({ title, description }: { title: string; description: string; }) => {
+              setError({ title, description })
+            }} />
+        )}
       </div>
-    </main>
+    </div>
   );
 }
