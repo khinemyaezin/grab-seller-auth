@@ -4,16 +4,19 @@ import { LoginFormValues } from "../types/auth.form";
 import { Button } from "@khinemyaezin/seller-ui/components/button";
 import { LoginRequest } from "../types/auth.request";
 import { HateoasLink } from "@khinemyaezin/seller-api";
-import { FieldGroup, Field, FieldLabel, FieldError } from "@khinemyaezin/seller-ui/components/field";
+import { FieldGroup, Field, FieldLabel, FieldError, FieldDescription } from "@khinemyaezin/seller-ui/components/field";
 import { Input } from "@khinemyaezin/seller-ui/components/input";
 import { ButtonStatus } from "@khinemyaezin/seller-ui/components/index";
+import { Link } from "react-router";
+import { routes } from "@khinemyaezin/seller-contracts";
 
 export type LoginFormProps = {
   link: HateoasLink;
   onLoginSuccess: () => void;
+  onLoginError:({title, description}:{title:string, description: string}) => void;
 }
 
-export function LoginForm({ link, onLoginSuccess }: LoginFormProps) {
+export function LoginForm({ link, onLoginSuccess, onLoginError }: LoginFormProps) {
   const loginMutation = useLoginMutation();
   const form = useForm<LoginFormValues>();
   const { handleSubmit, register, formState: { errors } } = form;
@@ -28,7 +31,7 @@ export function LoginForm({ link, onLoginSuccess }: LoginFormProps) {
         window.setTimeout(onLoginSuccess, 700);
       },
       onError: (err) => {
-        console.error("Login failed", err);
+        onLoginError({ title: "There was a problem" , description: "Unable to find your account."})
       }
     });
   };
@@ -36,14 +39,22 @@ export function LoginForm({ link, onLoginSuccess }: LoginFormProps) {
   return (
     <FormProvider {...form}>
       <form onSubmit={handleSubmit(onSubmit)}>
-
         <FieldGroup>
+          <div className="flex flex-col items-center gap-2 text-center">
+            <h1 className="text-xl font-bold">Welcome to Seller Central.</h1>
+            <FieldDescription>
+              Don&apos;t have an account?
+              <Link to={`/${routes.register}`} className="mx-3">
+                Create an account
+              </Link>
+            </FieldDescription>
+          </div>
           <Field data-invalid={!!errors.email}>
             <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input
               id="email"
               type="email"
-               placeholder="m@example.com"
+              placeholder="m@example.com"
               {...register("email", {
                 required: "Email is required",
                 pattern: {

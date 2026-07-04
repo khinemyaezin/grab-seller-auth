@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 import { LoginForm } from './login-form';
 import { useLoginMutation } from '../hooks/use-auth';
@@ -31,7 +32,11 @@ describe('LoginForm', () => {
       options.onSuccess({ userId: 'user-123' });
     });
 
-    render(<LoginForm link={mockLink} onLoginSuccess={()=>{}} />);
+    render(
+      <MemoryRouter>
+        <LoginForm link={mockLink} onLoginSuccess={()=>{}} onLoginError={()=>{}} />
+      </MemoryRouter>
+    );
 
     fireEvent.change(screen.getByLabelText(/email/i), { 
       target: { value: 'test@example.com' } 
