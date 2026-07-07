@@ -1,13 +1,13 @@
 import { useParams, Link } from "react-router";
 import UserDetailView from "../components/user-detail-view";
-import useIdentityRoot from "@/features/shared/hook/use-identity-root";
 import { Header } from "@khinemyaezin/seller-ui";
 import { Button } from "@khinemyaezin/seller-ui/components/button";
 import { routes } from "@khinemyaezin/seller-contracts";
+import { useIdentityGet } from "@/features/shared/hook/use-identity";
 
 export default function UserDetailPage() {
   const { userId } = useParams<{ userId: string }>();
-  const { data: identityRoot, isLoading, isError } = useIdentityRoot();
+  const { data: identityRoot, isLoading, isError } = useIdentityGet();
 
   if (!userId) {
     return <div className="p-8 text-center text-red-500">Error: User ID is required.</div>;
@@ -24,8 +24,8 @@ export default function UserDetailPage() {
             <Link to="">Back</Link>
           </Button>
         </Header>
-        {identityRoot?.getUser && (
-          <UserDetailView link={identityRoot.getUser} userId={userId} />
+        {(identityRoot as any)?.getUser && (
+          <UserDetailView link={undefined!} userId={userId} />
         )}
       </div>
     </main>

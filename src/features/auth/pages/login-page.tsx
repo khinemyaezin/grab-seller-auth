@@ -1,12 +1,12 @@
 import { LoginForm } from "../components/login-form";
-import useIdentityRoot from "@/features/shared/hook/use-identity-root";
-import { usePlatform } from "@/features/shared/context";
 import { eventBus } from "@khinemyaezin/seller-api";
 import AuthAlert from "@/features/shared/components/auth-alert";
 import { useState } from "react";
+import { usePlatform } from "@khinemyaezin/seller-ui";
+import { useIdentityGet } from "@/features/shared/hook/use-identity";
 
 export default function LoginPage() {
-  const { data } = useIdentityRoot();
+  const { data } = useIdentityGet();
   const platform = usePlatform();
   const [error, setError] = useState<{ title: string, description: string } | undefined>(undefined)
 
@@ -22,7 +22,7 @@ export default function LoginPage() {
               (platform?.events ?? eventBus).publish("auth:login-success:v1", {});
             }}
             onLoginError={({ title, description }) => {
-              setError({title, description })
+              setError({ title, description })
             }}
           />
         )}

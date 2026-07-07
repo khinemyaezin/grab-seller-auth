@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import RegisterPage from './register-page';
-import useIdentityRoot from '@/features/shared/hook/use-identity-root';
-import { usePlatform } from '@/features/shared/context';
 import { eventBus } from '@khinemyaezin/seller-api';
+import { useIdentityGet } from '@/features/shared/hook/use-identity';
+import { usePlatform } from '@khinemyaezin/seller-ui';
 
 vi.mock('react-router', () => ({
   Link: ({ children, to }: any) => <a href={to}>{children}</a>,
@@ -13,7 +13,11 @@ vi.mock('@/features/shared/hook/use-identity-root', () => ({
   default: vi.fn(),
 }));
 
-vi.mock('@/features/shared/context', () => ({
+vi.mock('@/features/shared/hook/use-identity', () => ({
+  useIdentityGet: vi.fn(),
+}));
+
+vi.mock('@khinemyaezin/seller-ui', () => ({
   usePlatform: vi.fn(),
 }));
 
@@ -30,8 +34,8 @@ describe('RegisterPage', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    
-    (useIdentityRoot as any).mockReturnValue({
+
+    (useIdentityGet as any).mockReturnValue({
       data: {
         register: { href: '/api/register', method: 'POST', rel: 'register' }
       }
@@ -42,27 +46,27 @@ describe('RegisterPage', () => {
         publish: mockPublish
       }
     });
-    
+
     vi.spyOn(eventBus, 'publish').mockImplementation(vi.fn());
   });
 
   it('publishes auth:registration-success:v1 event via platform.events when registration succeeds', () => {
     render(<RegisterPage />);
-    
+
     fireEvent.click(screen.getByTestId('mock-register-success'));
-    
+
     expect(mockPublish).toHaveBeenCalledWith('auth:registration-success:v1', {});
     expect(eventBus.publish).not.toHaveBeenCalled();
   });
 
   it('publishes auth:registration-success:v1 event via eventBus fallback when platform is not available', () => {
     (usePlatform as any).mockReturnValue(null);
-    
+
     render(<RegisterPage />);
-    
+
     // Simulate successful registration
     fireEvent.click(screen.getByTestId('mock-register-success'));
-    
+
     expect(eventBus.publish).toHaveBeenCalledWith('auth:registration-success:v1', {});
   });
 });
