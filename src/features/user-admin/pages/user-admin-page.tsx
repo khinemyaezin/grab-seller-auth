@@ -1,15 +1,15 @@
 import { Header } from "@khinemyaezin/seller-ui";
 import UserAdminView from "../components/user-admin-view";
-import useIdentityRoot from "@/features/shared/hook/use-identity-root";
+import { useIdentityGet } from "@/features/shared/hook/use-identity";
 
 export default function UserAdminPage() {
-  const { data: identityRoot, isLoading, isError } = useIdentityRoot();
+  const { data: identityRoot, isLoading, isError } = useIdentityGet();
 
   if (isLoading) {
     return <div className="p-8 text-center">Loading...</div>;
   }
 
-  if (isError || !identityRoot?.listUsers) {
+  if (isError) {
     return (
       <div className="p-8 text-center text-red-500">
         Error: Unable to load user administration. You might not have permission.
@@ -25,7 +25,7 @@ export default function UserAdminPage() {
           description="A list of all users in the system including their roles and status."
         >
         </Header>
-        <UserAdminView link={identityRoot.listUsers} />
+        <UserAdminView link={undefined!} />
       </div>
     </main>
   );

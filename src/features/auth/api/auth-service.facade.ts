@@ -1,21 +1,22 @@
 import type { HateoasLink } from "@khinemyaezin/seller-api";
-import { fetchIdentityRoot } from "./discovery";
 import { authService } from "./auth";
-import type { IdentityRoot } from "../types/auth.model";
+import type { IdentityLinks } from "../../shared/types/identity-model";
 import { User } from "@khinemyaezin/seller-contracts";
+import { linkDiscoveryService } from "@/features/shared/api/link-discovery";
+import { UserProfile } from "../types";
 
 export interface AuthServiceFacade {
-  getProfile(): Promise<User>;
+  getProfile(): Promise<UserProfile>;
   logout(): Promise<void>;
   refreshToken(): Promise<void>;
 }
 
 export function createAuthService(entryLink: HateoasLink): AuthServiceFacade {
-  let discoveryPromise: Promise<IdentityRoot> | null = null;
+  let discoveryPromise: Promise<IdentityLinks> | null = null;
 
-  function ensureDiscovery(): Promise<IdentityRoot> {
+  function ensureDiscovery(): Promise<IdentityLinks> {
     if (!discoveryPromise) {
-      discoveryPromise = fetchIdentityRoot(entryLink).catch((error) => {
+      discoveryPromise = linkDiscoveryService.root(entryLink).catch((error) => {
         discoveryPromise = null;
         throw error;
       });
@@ -24,18 +25,20 @@ export function createAuthService(entryLink: HateoasLink): AuthServiceFacade {
   }
 
   return {
-    async getProfile(): Promise<User> {
+    async getProfile(): Promise<UserProfile> {
       const root = await ensureDiscovery();
       if (!root.getProfile) {
         throw new Error("Identity root does not expose a 'get-profile' link");
       }
       return authService.readProfile(root.getProfile).then(res => {
-        const user: User = {
+        const user: UserProfile = {
           id: res.id,
           email: res.email,
           name: "",
           avatar: "",
-          createdAt: res.createdAt
+          createdAt: res.createdAt,
+          accessContexts: [...res.accessContexts],
+          currentAccessContext: res.currentAccessContext
         }
         return user;
       });

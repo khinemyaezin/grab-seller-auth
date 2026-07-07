@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
           "react-dom": { singleton: true, requiredVersion: "19.2.4" },
           "react-router": { singleton: true, requiredVersion: "7.18.0" },
           "@tanstack/react-query": { singleton: true, requiredVersion: "5.99.2" },
-          "@khinemyaezin/seller-api": { singleton: true, requiredVersion: "^1.0.1-canary-a7c1b65" },
+          "@khinemyaezin/seller-api": { singleton: true, requiredVersion: "^1.0.1-canary-96f0175" },
         },
       }),
     ],
@@ -48,6 +48,6 @@ export default defineConfig(({ mode }) => {
       },
     },
     preview: { port: 3003 },
-    build: { target: "chrome111" },
+    build: { target: "chrome111", cssCodeSplit: false },
   }
 });

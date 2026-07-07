@@ -1,12 +1,12 @@
 import { RegisterForm } from "../components/register-form";
-import useIdentityRoot from "@/features/shared/hook/use-identity-root";
-import { usePlatform } from "@/features/shared/context";
+import { useIdentityGet } from "@/features/shared/hook/use-identity";
 import { eventBus } from "@khinemyaezin/seller-api";
 import { useState } from "react";
 import AuthAlert from "@/features/shared/components/auth-alert";
+import { usePlatform } from "@khinemyaezin/seller-ui";
 
 export default function RegisterPage() {
-  const { data } = useIdentityRoot();
+  const { data } = useIdentityGet();
   const platform = usePlatform();
   const [error, setError] = useState<{ title: string, description: string } | undefined>(undefined)
 
