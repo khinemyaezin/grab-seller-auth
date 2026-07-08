@@ -12,15 +12,17 @@ export default function AuthRoutes({ link, platform }: {
   platform?: SellerPlatform;
 }) {
   return (
-    <PlatformProvider platform={platform}>
-      <EntryLinkProvider link={link}>
-        <Routes>
-          <Route path="" element={<Navigate to={routes.login} replace />} />
-          <Route path={routes.login} element={<LoginPage />} />
-          <Route path={routes.register} element={<RegisterPage />} />
-          <Route path={routes.contextSelection} element={<AccessContextSelectionPage/>} />
-        </Routes>
-      </EntryLinkProvider>
-    </PlatformProvider>
+    <div className="seller-auth-mfe">
+      <PlatformProvider platform={platform}>
+        <EntryLinkProvider link={link}>
+          <Routes>
+            <Route path="" element={<Navigate to={routes.login} replace />} />
+            <Route path={routes.login} element={<LoginPage />} />
+            <Route path={routes.register} element={<RegisterPage />} />
+            <Route path={routes.contextSelection} element={<AccessContextSelectionPage />} />
+          </Routes>
+        </EntryLinkProvider>
+      </PlatformProvider>
+    </div>
   );
 }
