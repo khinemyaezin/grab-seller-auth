@@ -1,7 +1,6 @@
 import type { HateoasLink } from "@khinemyaezin/seller-api";
 import { authService } from "./auth";
 import type { IdentityLinks } from "../../shared/types/identity-model";
-import { User } from "@khinemyaezin/seller-contracts";
 import { linkDiscoveryService } from "@/features/shared/api/link-discovery";
 import { UserProfile } from "../types";
 
