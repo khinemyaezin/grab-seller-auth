@@ -16,8 +16,8 @@ export default function AccessContextSelectionPage() {
                 <div className="flex flex-1 items-center justify-center">
                     <div className="w-full max-w-md space-y-8">
                         <Header
-                            title="Select a Business"
-                            description="Choose the business account you want to manage."
+                            title="Select a workspace"
+                            description="Choose the workspace you want to manage."
                         >
                         </Header>
                         <AccessContextSelectionView
