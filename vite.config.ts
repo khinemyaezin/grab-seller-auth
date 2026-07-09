@@ -25,7 +25,8 @@ export default defineConfig(({ mode }) => {
         },
         exposes: {
           "./Routes": "./src/app/AuthRoutes.tsx",
-          "./AuthService": "./src/features/auth/api/auth-service.facade.ts"
+          "./AuthService": "./src/features/auth/api/auth-service.facade.ts",
+          "./UserMenuWidget": "./src/features/auth/components/user-menu-widget-exposed.tsx"
         },
         shared: {
           react: { singleton: true, requiredVersion: "19.2.4" },
@@ -40,13 +41,13 @@ export default defineConfig(({ mode }) => {
       port: 3003,
       origin: env.VITE_ORIGIN,
       cors: { origin: env.VITE_CORS_ORIGIN },
-      proxy: { 
-        "/api": { 
-          target: env.VITE_API_URL, 
-          changeOrigin: true, 
-          xfwd: true, 
+      proxy: {
+        "/api": {
+          target: env.VITE_API_URL,
+          changeOrigin: true,
+          xfwd: true,
           headers: { "X-Platform": "SELLER_PORTAL" }
-        } 
+        }
       },
     },
     preview: { port: 3003 },
