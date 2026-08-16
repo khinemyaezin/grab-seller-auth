@@ -3,7 +3,7 @@ import { useAccessContextList, useAccessContextSelection } from "../hooks/use-ac
 import { useIdentityGet } from "@/features/shared/hook/use-identity";
 import { usePlatform } from "@khinemyaezin/seller-ui";
 import { AccessContext, AccessContextListResponse } from "../types";
-import { eventBus, resolveLink } from "@khinemyaezin/seller-api";
+import { resolveLink } from "@khinemyaezin/seller-api";
 import { useEffect, useId, useState } from "react";
 
 const accessContextResponseToModel = (response: AccessContextListResponse | undefined): AccessContext[] => {
@@ -50,7 +50,7 @@ export default function AccessContextMenu() {
             { link: selectedContext.accessLink },
             {
                 onSuccess: () => {
-                    (platform?.events ?? eventBus).publish("auth:context-selected:v1", { assignmentId: newAssignmentId });
+                    (platform?.events)?.emit("auth:context-selected:v1", { assignmentId: newAssignmentId });
                 },
                 onError: () => {
                     if (currentAssignmentId) {

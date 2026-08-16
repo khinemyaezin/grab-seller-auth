@@ -1,7 +1,6 @@
 import { useIdentityGet } from "@/features/shared/hook/use-identity";
 import AccessContextSelectionView from "../components/access-context-selection-view";
 import { Header, usePlatform } from "@khinemyaezin/seller-ui";
-import { eventBus } from "@khinemyaezin/seller-api";
 
 export default function AccessContextSelectionPage() {
     const { data } = useIdentityGet();
@@ -23,7 +22,7 @@ export default function AccessContextSelectionPage() {
                         <AccessContextSelectionView
                             link={data?.listAccessContext}
                             onSuccess={(assignmentId) => {
-                                (platform?.events ?? eventBus).publish("auth:context-selected:v1", { assignmentId })
+                                platform?.events.emit("auth:context-selected:v1", { assignmentId })
                             }} />
                     </div>
                 </div>

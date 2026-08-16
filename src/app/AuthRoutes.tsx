@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router";
+import { Route, Routes } from "react-router";
 import LoginPage from "../features/auth/pages/login-page";
 import RegisterPage from "../features/auth/pages/register-page";
 import { HateoasLink } from "@khinemyaezin/seller-api";
