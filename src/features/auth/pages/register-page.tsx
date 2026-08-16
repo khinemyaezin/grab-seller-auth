@@ -1,6 +1,5 @@
 import { RegisterForm } from "../components/register-form";
 import { useIdentityGet } from "@/features/shared/hook/use-identity";
-import { eventBus } from "@khinemyaezin/seller-api";
 import { useState } from "react";
 import AuthAlert from "@/features/shared/components/auth-alert";
 import { usePlatform } from "@khinemyaezin/seller-ui";
@@ -19,7 +18,7 @@ export default function RegisterPage() {
           <RegisterForm
             link={data.register}
             onRegisterSuccess={() => {
-              (platform?.events ?? eventBus).publish("auth:registration-success:v1", {});
+              (platform?.events)?.emit("auth:registration-success:v1", {});
             }}
             onRegisterError={({ title, description }: { title: string; description: string; }) => {
               setError({ title, description })

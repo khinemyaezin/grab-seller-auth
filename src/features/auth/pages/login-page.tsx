@@ -1,5 +1,4 @@
 import { LoginForm } from "../components/login-form";
-import { eventBus } from "@khinemyaezin/seller-api";
 import AuthAlert from "@/features/shared/components/auth-alert";
 import { useState } from "react";
 import { usePlatform } from "@khinemyaezin/seller-ui";
@@ -19,7 +18,7 @@ export default function LoginPage() {
           <LoginForm
             link={data.login}
             onLoginSuccess={() => {
-              (platform?.events ?? eventBus).publish("auth:login-success:v1", {});
+              platform?.events.emit("auth:login-success:v1", {});
             }}
             onLoginError={({ title, description }) => {
               setError({ title, description })
